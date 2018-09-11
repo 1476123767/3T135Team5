@@ -1,0 +1,52 @@
+create table car_info(
+  car_id int(10) PRIMARY KEY AUTO_INCREMENT,
+  car_type varchar(20) not null,
+  capacity FLOAT not null,
+  manufacturer VARCHAR(200) NOT NULL ,
+  produce_date DATE NOT NULL ,
+  price float not null
+)CHARSET =utf8;
+
+create table car_resever(
+  resever_id int PRIMARY KEY AUTO_INCREMENT,
+  car_id int REFERENCES car_info(car_id),
+  status char(2) not null
+)CHARSET =utf8;
+
+insert into car_info values(default,'宝马',2.0,'宝马生产',now(),11.2),
+  (default,'宝马2',3.0,'宝马生产2',now(),11.2),
+  (default,'宝马3',4.0,'宝马生产3',now(),11.2),
+  (default,'宝马4',5.0,'宝马生产4',now(),11.2),
+  (default,'宝马5',2.0,'宝马生产',now(),11.2),
+  (default,'宝马6',3.0,'宝马生产2',now(),11.2),
+  (default,'宝马7',4.0,'宝马生产3',now(),11.2),
+  (default,'宝马8',5.0,'宝马生产4',now(),11.2),
+  (default,'宝马9',2.0,'宝马生产',now(),11.2),
+  (default,'宝马10',3.0,'宝马生产2',now(),11.2),
+  (default,'宝马11',4.0,'宝马生产3',now(),11.2),
+  (default,'宝马12',5.0,'宝马生产4',now(),11.2),
+  (default,'宝马13',2.0,'宝马生产',now(),11.2),
+  (default,'宝马14',3.0,'宝马生产2',now(),11.2),
+  (default,'宝马15',4.0,'宝马生产3',now(),11.2),
+  (default,'宝马16',5.0,'宝马生产4',now(),11.2);
+
+insert into car_resever values(DEFAULT ,1,'1'),
+(DEFAULT ,2,'0'),
+(DEFAULT ,3,'1'),
+(DEFAULT ,4,'0'),
+  (DEFAULT ,5,'1'),
+  (DEFAULT ,6,'0'),
+  (DEFAULT ,7,'1'),
+  (DEFAULT ,8,'0'),
+  (DEFAULT ,12,'1'),
+  (DEFAULT ,9,'0'),
+  (DEFAULT ,10,'1'),
+  (DEFAULT ,11,'0'),(DEFAULT ,13,'1'),
+  (DEFAULT ,14,'0'),
+  (DEFAULT ,15,'1'),
+  (DEFAULT ,16,'0');
+
+select * from car_info;
+select * from car_resever;
+
+select i.*,r.status from car_info i,car_resever r where i.car_id=r.car_id order by car_id LIMIT 5,5 ;

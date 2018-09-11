@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.szxs.dao.Car_InfoDao">
+
+    <sql id="queryPager">
+        <where>
+            i.car_id=r.car_id
+            <choose>
+                <when test="keyType==1">
+                    and i.produce_Date = #{val}
+                </when>
+                <when test="keyType==2">
+                    and i.car_Type like concat('%',#{val},'%')
+                </when>
+                <when test="keyType==3">
+                    and i.manufacturer like concat('%', #{val},'%')
+                </when>
+            </choose>
+        </where>
+    </sql>
+
+    <resultMap id="CarInfoMap" type="Car_Info" >
+        <result property="car_Id" column="car_Id" />
+        <result property="car_Type" column="car_Type" />
+        <result property="capacity" column="capacity" />
+        <result property="manufacturer" column="manufacturer" />
+        <result property="produce_Date" column="produce_Date" />
+        <result property="price" column="price" />
+        <association property="resever" javaType="Car_Resever">
+            <result property="status" column="status" />
+        </association>
+    </resultMap>
+    <select id="queryCarInfo" resultMap="CarInfoMap">
+        select i.*,r.status from car_info i,car_resever r
+        <include refid="queryPager" />
+        order by car_id LIMIT #{offset},#{pageSize}
+    </select>
+
+    <select id="queryCarInfoRows" resultType="_int">
+        select count(1) from car_info i,car_resever r
+        <include refid="queryPager" />
+    </select>
+
+    <insert id="addCarInfo" >
+        insert into car_info values(default,'宝马aaaaa',2.0,'宝马生产aaa',now(),11.2)
+    </insert>
+</mapper>
